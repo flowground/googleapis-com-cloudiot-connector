@@ -1,0 +1,254 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "required": true,
+            "type": "string"
+        },
+        "updateMask": {
+            "type": "string"
+        },
+        "alt": {
+            "type": "string",
+            "enum": [
+                "json",
+                "media",
+                "proto"
+            ],
+            "default": "json"
+        },
+        "callback": {
+            "type": "string"
+        },
+        "fields": {
+            "type": "string"
+        },
+        "key": {
+            "type": "string"
+        },
+        "oauth_token": {
+            "type": "string"
+        },
+        "prettyPrint": {
+            "type": "boolean",
+            "default": true
+        },
+        "quotaUser": {
+            "type": "string"
+        },
+        "uploadType": {
+            "type": "string"
+        },
+        "upload_protocol": {
+            "type": "string"
+        },
+        "requestBody": {
+            "description": "The device resource.",
+            "properties": {
+                "blocked": {
+                    "description": "If a device is blocked, connections or requests from this device will fail.\nCan be used to temporarily prevent the device from connecting if, for\nexample, the sensor is generating bad data and needs maintenance.",
+                    "type": "boolean"
+                },
+                "config": {
+                    "description": "The most recent device configuration, which is eventually sent from\nCloud IoT Core to the device. If not present on creation, the\nconfiguration will be initialized with an empty payload and version value\nof `1`. To update this field after creation, use the\n`DeviceManager.ModifyCloudToDeviceConfig` method.",
+                    "properties": {
+                        "binaryData": {
+                            "description": "The device configuration data.",
+                            "format": "byte",
+                            "type": "string"
+                        },
+                        "cloudUpdateTime": {
+                            "description": "[Output only] The time at which this configuration version was updated in\nCloud IoT Core. This timestamp is set by the server.",
+                            "format": "google-datetime",
+                            "type": "string"
+                        },
+                        "deviceAckTime": {
+                            "description": "[Output only] The time at which Cloud IoT Core received the\nacknowledgment from the device, indicating that the device has received\nthis configuration version. If this field is not present, the device has\nnot yet acknowledged that it received this version. Note that when\nthe config was sent to the device, many config versions may have been\navailable in Cloud IoT Core while the device was disconnected, and on\nconnection, only the latest version is sent to the device. Some\nversions may never be sent to the device, and therefore are never\nacknowledged. This timestamp is set by Cloud IoT Core.",
+                            "format": "google-datetime",
+                            "type": "string"
+                        },
+                        "version": {
+                            "description": "[Output only] The version of this update. The version number is assigned by\nthe server, and is always greater than 0 after device creation. The\nversion must be 0 on the `CreateDevice` request if a `config` is\nspecified; the response of `CreateDevice` will always have a value of 1.",
+                            "format": "int64",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "credentials": {
+                    "description": "The credentials used to authenticate this device. To allow credential\nrotation without interruption, multiple device credentials can be bound to\nthis device. No more than 3 credentials can be bound to a single device at\na time. When new credentials are added to a device, they are verified\nagainst the registry credentials. For details, see the description of the\n`DeviceRegistry.credentials` field.",
+                    "items": {
+                        "description": "A server-stored device credential used for authentication.",
+                        "properties": {
+                            "expirationTime": {
+                                "description": "[Optional] The time at which this credential becomes invalid. This\ncredential will be ignored for new client authentication requests after\nthis timestamp; however, it will not be automatically deleted.",
+                                "format": "google-datetime",
+                                "type": "string"
+                            },
+                            "publicKey": {
+                                "description": "A public key used to verify the signature of JSON Web Tokens (JWTs).\nWhen adding a new device credential, either via device creation or via\nmodifications, this public key credential may be required to be signed by\none of the registry level certificates. More specifically, if the\nregistry contains at least one certificate, any new device credential\nmust be signed by one of the registry certificates. As a result,\nwhen the registry contains certificates, only X.509 certificates are\naccepted as device credentials. However, if the registry does\nnot contain a certificate, self-signed certificates and public keys will\nbe accepted. New device credentials must be different from every\nregistry-level certificate.",
+                                "properties": {
+                                    "format": {
+                                        "description": "The format of the key.",
+                                        "enum": [
+                                            "UNSPECIFIED_PUBLIC_KEY_FORMAT",
+                                            "RSA_PEM",
+                                            "RSA_X509_PEM",
+                                            "ES256_PEM",
+                                            "ES256_X509_PEM"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "key": {
+                                        "description": "The key data.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "gatewayConfig": {
+                    "description": "Gateway-related configuration and state.",
+                    "properties": {
+                        "gatewayAuthMethod": {
+                            "description": "Indicates how to authorize and/or authenticate devices to access the\ngateway.",
+                            "enum": [
+                                "GATEWAY_AUTH_METHOD_UNSPECIFIED",
+                                "ASSOCIATION_ONLY",
+                                "DEVICE_AUTH_TOKEN_ONLY",
+                                "ASSOCIATION_AND_DEVICE_AUTH_TOKEN"
+                            ],
+                            "type": "string"
+                        },
+                        "gatewayType": {
+                            "description": "Indicates whether the device is a gateway.",
+                            "enum": [
+                                "GATEWAY_TYPE_UNSPECIFIED",
+                                "GATEWAY",
+                                "NON_GATEWAY"
+                            ],
+                            "type": "string"
+                        },
+                        "lastAccessedGatewayId": {
+                            "description": "[Output only] The ID of the gateway the device accessed most recently.",
+                            "type": "string"
+                        },
+                        "lastAccessedGatewayTime": {
+                            "description": "[Output only] The most recent time at which the device accessed the gateway\nspecified in `last_accessed_gateway`.",
+                            "format": "google-datetime",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "id": {
+                    "description": "The user-defined device identifier. The device ID must be unique\nwithin a device registry.",
+                    "type": "string"
+                },
+                "lastConfigAckTime": {
+                    "description": "[Output only] The last time a cloud-to-device config version acknowledgment\nwas received from the device. This field is only for configurations\nsent through MQTT.",
+                    "format": "google-datetime",
+                    "type": "string"
+                },
+                "lastConfigSendTime": {
+                    "description": "[Output only] The last time a cloud-to-device config version was sent to\nthe device.",
+                    "format": "google-datetime",
+                    "type": "string"
+                },
+                "lastErrorStatus": {
+                    "description": "[Output only] The error message of the most recent error, such as a failure\nto publish to Cloud Pub/Sub. 'last_error_time' is the timestamp of this\nfield. If no errors have occurred, this field has an empty message\nand the status code 0 == OK. Otherwise, this field is expected to have a\nstatus code other than OK.",
+                    "properties": {
+                        "code": {
+                            "description": "The status code, which should be an enum value of google.rpc.Code.",
+                            "format": "int32",
+                            "type": "integer"
+                        },
+                        "details": {
+                            "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+                            "items": {
+                                "additionalProperties": {
+                                    "description": "Properties of the object. Contains field @type with type URL."
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "message": {
+                            "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "lastErrorTime": {
+                    "description": "[Output only] The time the most recent error occurred, such as a failure to\npublish to Cloud Pub/Sub. This field is the timestamp of\n'last_error_status'.",
+                    "format": "google-datetime",
+                    "type": "string"
+                },
+                "lastEventTime": {
+                    "description": "[Output only] The last time a telemetry event was received. Timestamps are\nperiodically collected and written to storage; they may be stale by a few\nminutes.",
+                    "format": "google-datetime",
+                    "type": "string"
+                },
+                "lastHeartbeatTime": {
+                    "description": "[Output only] The last time an MQTT `PINGREQ` was received. This field\napplies only to devices connecting through MQTT. MQTT clients usually only\nsend `PINGREQ` messages if the connection is idle, and no other messages\nhave been sent. Timestamps are periodically collected and written to\nstorage; they may be stale by a few minutes.",
+                    "format": "google-datetime",
+                    "type": "string"
+                },
+                "lastStateTime": {
+                    "description": "[Output only] The last time a state event was received. Timestamps are\nperiodically collected and written to storage; they may be stale by a few\nminutes.",
+                    "format": "google-datetime",
+                    "type": "string"
+                },
+                "logLevel": {
+                    "description": "**Beta Feature**\n\nThe logging verbosity for device activity. If unspecified,\nDeviceRegistry.log_level will be used.",
+                    "enum": [
+                        "LOG_LEVEL_UNSPECIFIED",
+                        "NONE",
+                        "ERROR",
+                        "INFO",
+                        "DEBUG"
+                    ],
+                    "type": "string"
+                },
+                "metadata": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The metadata key-value pairs assigned to the device. This metadata is not\ninterpreted or indexed by Cloud IoT Core. It can be used to add contextual\ninformation for the device.\n\nKeys must conform to the regular expression a-zA-Z+ and\nbe less than 128 bytes in length.\n\nValues are free-form strings. Each value must be less than or equal to 32\nKB in size.\n\nThe total size of all keys and values must be less than 256 KB, and the\nmaximum number of key-value pairs is 500.",
+                    "type": "object"
+                },
+                "name": {
+                    "description": "The resource path name. For example,\n`projects/p1/locations/us-central1/registries/registry0/devices/dev0` or\n`projects/p1/locations/us-central1/registries/registry0/devices/{num_id}`.\nWhen `name` is populated as a response from the service, it always ends\nin the device numeric ID.",
+                    "type": "string"
+                },
+                "numId": {
+                    "description": "[Output only] A server-defined unique numeric ID for the device. This is a\nmore compact way to identify devices, and it is globally unique.",
+                    "format": "uint64",
+                    "type": "string"
+                },
+                "state": {
+                    "description": "[Output only] The state most recently received from the device. If no state\nhas been reported, this field is not present.",
+                    "properties": {
+                        "binaryData": {
+                            "description": "The device state data.",
+                            "format": "byte",
+                            "type": "string"
+                        },
+                        "updateTime": {
+                            "description": "[Output only] The time at which this state version was updated in Cloud\nIoT Core.",
+                            "format": "google-datetime",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    }
+}

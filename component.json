@@ -1,0 +1,322 @@
+{
+    "title": "Cloud IoT",
+    "description": "Registers and manages IoT (Internet of Things) devices that connect to the Google Cloud Platform.\n",
+    "docsUrl": "https://cloud.google.com/iot",
+    "url": "https://api.apis.guru/v2/specs/googleapis.com/cloudiot/v1/swagger.json",
+    "envVars": {
+        "OAUTH_CLIENT_ID": {
+            "description": "OAuth Client ID"
+        },
+        "OAUTH_CLIENT_SECRET": {
+            "description": "OAuth Client Secret"
+        }
+    },
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://cloudiot.googleapis.com/",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            },
+            "Oauth2": {
+                "label": "Oauth 2.0 authentication",
+                "viewClass": "OAuthFieldView"
+            }
+        },
+        "oauth2": {
+            "client_id": "{{OAUTH_CLIENT_ID}}",
+            "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth"
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "cloudiot_projects_locations_registries_devices_delete": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_delete.js",
+            "title": "Deletes a device.",
+            "description": "Deletes a device.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_devices_get": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_get.js",
+            "title": "Gets details about a device.",
+            "description": "Gets details about a device.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_devices_patch": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_patch.js",
+            "title": "Updates a device.",
+            "description": "Updates a device.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_patch.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_devices_configVersions_list": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_configVersions_list.js",
+            "title": "Lists the last few versions of the device configuration in descending\norder (i.e.: newest first).",
+            "description": "Lists the last few versions of the device configuration in descending\norder (i.e.: newest first).",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_configVersions_list.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_devices_states_list": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_states_list.js",
+            "title": "Lists the last few versions of the device state in descending order (i.e.:\nnewest first).",
+            "description": "Lists the last few versions of the device state in descending order (i.e.:\nnewest first).",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_states_list.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_devices_modifyCloudToDeviceConfig": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_modifyCloudToDeviceConfig.js",
+            "title": "Modifies the configuration for the device, which is eventually sent from\nthe Cloud IoT Core servers. Returns the modified configuration version and\nits metadata.",
+            "description": "Modifies the configuration for the device, which is eventually sent from\nthe Cloud IoT Core servers. Returns the modified configuration version and\nits metadata.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_modifyCloudToDeviceConfig.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_devices_sendCommandToDevice": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_sendCommandToDevice.js",
+            "title": "Sends a command to the specified device. In order for a device to be able\nto receive commands, it must:\n1) be connected to Cloud IoT Core using the MQTT protocol, and\n2) be subscribed to the group of MQTT topics specified by\n   /devices/{device-id}/commands/#. This subscription will receive commands\n   at the top-level topic /devices/{device-id}/commands as well as commands\n   for subfolders, like /devices/{device-id}/commands/subfolder.\n   Note that subscribing to specific subfolders is not supported.\nIf the command could not be delivered to the device, this method will\nreturn an error; in particular, if the device is not subscribed, this\nmethod will return FAILED_PRECONDITION. Otherwise, this method will\nreturn OK. If the subscription is QoS 1, at least once delivery will be\nguaranteed; for QoS 0, no acknowledgment will be expected from the device.",
+            "description": "Sends a command to the specified device. In order for a device to be able\nto receive commands, it must:\n1) be connected to Cloud IoT Core using the MQTT protocol, and\n2) be subscribed to the group of MQTT topics specified by\n   /devices/{device-id}/commands/#. This subscription will receive commands\n   at the top-level topic /devices/{device-id}/commands as well as commands\n   for subfolders, like /devices/{device-id}/commands/subfolder.\n   Note that subscribing to specific subfolders is not supported.\nIf the command could not be delivered to the device, this method will\nreturn an error; in particular, if the device is not subscribed, this\nmethod will return FAILED_PRECONDITION. Otherwise, this method will\nreturn OK. If the subscription is QoS 1, at least once delivery will be\nguaranteed; for QoS 0, no acknowledgment will be expected from the device.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_sendCommandToDevice.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_devices_list": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_list.js",
+            "title": "List devices in a device registry.",
+            "description": "List devices in a device registry.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_list.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_devices_create": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_devices_create.js",
+            "title": "Creates a device in a device registry.",
+            "description": "Creates a device in a device registry.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_devices_create.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_list": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_list.js",
+            "title": "Lists device registries.",
+            "description": "Lists device registries.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_list.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_create": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_create.js",
+            "title": "Creates a device registry that contains devices.",
+            "description": "Creates a device registry that contains devices.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_create.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_groups_bindDeviceToGateway": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_groups_bindDeviceToGateway.js",
+            "title": "Associates the device with the gateway.",
+            "description": "Associates the device with the gateway.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_groups_bindDeviceToGateway.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_groups_unbindDeviceFromGateway": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_groups_unbindDeviceFromGateway.js",
+            "title": "Deletes the association between the device and the gateway.",
+            "description": "Deletes the association between the device and the gateway.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_groups_unbindDeviceFromGateway.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_groups_getIamPolicy": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_groups_getIamPolicy.js",
+            "title": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+            "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_groups_getIamPolicy.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_groups_setIamPolicy": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_groups_setIamPolicy.js",
+            "title": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+            "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_groups_setIamPolicy.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "cloudiot_projects_locations_registries_groups_testIamPermissions": {
+            "main": "./lib/actions/cloudiot_projects_locations_registries_groups_testIamPermissions.js",
+            "title": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.",
+            "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/cloudiot_projects_locations_registries_groups_testIamPermissions.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "required": true,
+            "type": "string"
+        },
+        "access_token": {
+            "type": "string"
+        },
+        "alt": {
+            "type": "string",
+            "enum": [
+                "json",
+                "media",
+                "proto"
+            ],
+            "default": "json"
+        },
+        "callback": {
+            "type": "string"
+        },
+        "fields": {
+            "type": "string"
+        },
+        "key": {
+            "type": "string"
+        },
+        "oauth_token": {
+            "type": "string"
+        },
+        "prettyPrint": {
+            "type": "boolean",
+            "default": true
+        },
+        "quotaUser": {
+            "type": "string"
+        },
+        "uploadType": {
+            "type": "string"
+        },
+        "upload_protocol": {
+            "type": "string"
+        },
+        "requestBody": {
+            "description": "Request for `SendCommandToDevice`.",
+            "properties": {
+                "binaryData": {
+                    "description": "The command data to send to the device.",
+                    "format": "byte",
+                    "type": "string"
+                },
+                "subfolder": {
+                    "description": "Optional subfolder for the command. If empty, the command will be delivered\nto the /devices/{device-id}/commands topic, otherwise it will be delivered\nto the /devices/{device-id}/commands/{subfolder} topic. Multi-level\nsubfolders are allowed. This field must not have more than 256 characters,\nand must not contain any MQTT wildcards (\"+\" or \"#\") or null characters.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    }
+}

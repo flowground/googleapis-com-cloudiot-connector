@@ -1,0 +1,50 @@
+{
+    "type": "object",
+    "properties": {
+        "deviceIds": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "deviceNumIds": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "fieldMask": {
+            "type": "string"
+        },
+        "pageSize": {
+            "type": "integer"
+        },
+        "pageToken": {
+            "type": "string"
+        },
+        "parent": {
+            "required": true,
+            "type": "string"
+        },
+        "uploadType": {
+            "type": "string"
+        },
+        "upload_protocol": {
+            "type": "string"
+        },
+        "gatewayListOptions_associationsDeviceId": {
+            "type": "string"
+        },
+        "gatewayListOptions_associationsGatewayId": {
+            "type": "string"
+        },
+        "gatewayListOptions_gatewayType": {
+            "type": "string",
+            "enum": [
+                "GATEWAY_TYPE_UNSPECIFIED",
+                "GATEWAY",
+                "NON_GATEWAY"
+            ]
+        }
+    }
+}

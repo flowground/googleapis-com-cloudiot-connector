@@ -1,0 +1,189 @@
+{
+    "type": "object",
+    "properties": {
+        "parent": {
+            "required": true,
+            "type": "string"
+        },
+        "access_token": {
+            "type": "string"
+        },
+        "alt": {
+            "type": "string",
+            "enum": [
+                "json",
+                "media",
+                "proto"
+            ],
+            "default": "json"
+        },
+        "callback": {
+            "type": "string"
+        },
+        "fields": {
+            "type": "string"
+        },
+        "key": {
+            "type": "string"
+        },
+        "oauth_token": {
+            "type": "string"
+        },
+        "prettyPrint": {
+            "type": "boolean",
+            "default": true
+        },
+        "quotaUser": {
+            "type": "string"
+        },
+        "uploadType": {
+            "type": "string"
+        },
+        "upload_protocol": {
+            "type": "string"
+        },
+        "requestBody": {
+            "description": "A container for a group of devices.",
+            "properties": {
+                "credentials": {
+                    "description": "The credentials used to verify the device credentials. No more than 10\ncredentials can be bound to a single registry at a time. The verification\nprocess occurs at the time of device creation or update. If this field is\nempty, no verification is performed. Otherwise, the credentials of a newly\ncreated device or added credentials of an updated device should be signed\nwith one of these registry credentials.\n\nNote, however, that existing devices will never be affected by\nmodifications to this list of credentials: after a device has been\nsuccessfully created in a registry, it should be able to connect even if\nits registry credentials are revoked, deleted, or modified.",
+                    "items": {
+                        "description": "A server-stored registry credential used to validate device credentials.",
+                        "properties": {
+                            "publicKeyCertificate": {
+                                "description": "A public key certificate used to verify the device credentials.",
+                                "properties": {
+                                    "certificate": {
+                                        "description": "The certificate data.",
+                                        "type": "string"
+                                    },
+                                    "format": {
+                                        "description": "The certificate format.",
+                                        "enum": [
+                                            "UNSPECIFIED_PUBLIC_KEY_CERTIFICATE_FORMAT",
+                                            "X509_CERTIFICATE_PEM"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "x509Details": {
+                                        "description": "[Output only] The certificate details. Used only for X.509 certificates.",
+                                        "properties": {
+                                            "expiryTime": {
+                                                "description": "The time the certificate becomes invalid.",
+                                                "format": "google-datetime",
+                                                "type": "string"
+                                            },
+                                            "issuer": {
+                                                "description": "The entity that signed the certificate.",
+                                                "type": "string"
+                                            },
+                                            "publicKeyType": {
+                                                "description": "The type of public key in the certificate.",
+                                                "type": "string"
+                                            },
+                                            "signatureAlgorithm": {
+                                                "description": "The algorithm used to sign the certificate.",
+                                                "type": "string"
+                                            },
+                                            "startTime": {
+                                                "description": "The time the certificate becomes valid.",
+                                                "format": "google-datetime",
+                                                "type": "string"
+                                            },
+                                            "subject": {
+                                                "description": "The entity the certificate and public key belong to.",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "eventNotificationConfigs": {
+                    "description": "The configuration for notification of telemetry events received from the\ndevice. All telemetry events that were successfully published by the\ndevice and acknowledged by Cloud IoT Core are guaranteed to be\ndelivered to Cloud Pub/Sub. If multiple configurations match a message,\nonly the first matching configuration is used. If you try to publish a\ndevice telemetry event using MQTT without specifying a Cloud Pub/Sub topic\nfor the device's registry, the connection closes automatically. If you try\nto do so using an HTTP connection, an error is returned. Up to 10\nconfigurations may be provided.",
+                    "items": {
+                        "description": "The configuration for forwarding telemetry events.",
+                        "properties": {
+                            "pubsubTopicName": {
+                                "description": "A Cloud Pub/Sub topic name. For example,\n`projects/myProject/topics/deviceEvents`.",
+                                "type": "string"
+                            },
+                            "subfolderMatches": {
+                                "description": "If the subfolder name matches this string exactly, this configuration will\nbe used. The string must not include the leading '/' character. If empty,\nall strings are matched. This field is used only for telemetry events;\nsubfolders are not supported for state changes.",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "httpConfig": {
+                    "description": "The DeviceService (HTTP) configuration for this device registry.",
+                    "properties": {
+                        "httpEnabledState": {
+                            "description": "If enabled, allows devices to use DeviceService via the HTTP protocol.\nOtherwise, any requests to DeviceService will fail for this registry.",
+                            "enum": [
+                                "HTTP_STATE_UNSPECIFIED",
+                                "HTTP_ENABLED",
+                                "HTTP_DISABLED"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "id": {
+                    "description": "The identifier of this device registry. For example, `myRegistry`.",
+                    "type": "string"
+                },
+                "logLevel": {
+                    "description": "**Beta Feature**\n\nThe default logging verbosity for activity from devices in this registry.\nThe verbosity level can be overridden by Device.log_level.",
+                    "enum": [
+                        "LOG_LEVEL_UNSPECIFIED",
+                        "NONE",
+                        "ERROR",
+                        "INFO",
+                        "DEBUG"
+                    ],
+                    "type": "string"
+                },
+                "mqttConfig": {
+                    "description": "The MQTT configuration for this device registry.",
+                    "properties": {
+                        "mqttEnabledState": {
+                            "description": "If enabled, allows connections using the MQTT protocol. Otherwise, MQTT\nconnections to this registry will fail.",
+                            "enum": [
+                                "MQTT_STATE_UNSPECIFIED",
+                                "MQTT_ENABLED",
+                                "MQTT_DISABLED"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "description": "The resource path name. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+                    "type": "string"
+                },
+                "stateNotificationConfig": {
+                    "description": "The configuration for notification of new states received from the device.\nState updates are guaranteed to be stored in the state history, but\nnotifications to Cloud Pub/Sub are not guaranteed. For example, if\npermissions are misconfigured or the specified topic doesn't exist, no\nnotification will be published but the state will still be stored in Cloud\nIoT Core.",
+                    "properties": {
+                        "pubsubTopicName": {
+                            "description": "A Cloud Pub/Sub topic name. For example,\n`projects/myProject/topics/deviceEvents`.",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    }
+}
